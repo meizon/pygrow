@@ -1,4 +1,5 @@
 from datetime import datetime
+from grow.common import markdown_extensions
 from grow.common import utils
 from grow.pods import locales as locales_lib
 from grow.pods.collectionz import collectionz
@@ -63,12 +64,13 @@ def docs(collection, locale=None, order_by=None, _pod=None):
 
 
 def markdown_filter(value):
+  extensions = markdown_extensions.EXTENSIONS
   try:
     if isinstance(value, unicode):
       value = value.decode('utf-8')
-    return markdown.markdown(value)
+    return markdown.markdown(value, extensions=extensions)
   except UnicodeEncodeError:
-    return markdown.markdown(value)
+    return markdown.markdown(value, extensions=extensions)
 
 
 _slug_regex = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')

@@ -7,6 +7,7 @@ from . import machine_translate
 from . import routes
 from . import run
 from . import test
+from . import webreview
 
 
 def add(group):
@@ -19,3 +20,4 @@ def add(group):
   group.add_command(routes.routes)
   group.add_command(run.run)
   group.add_command(test.test)
+  group.add_command(webreview.webreview)

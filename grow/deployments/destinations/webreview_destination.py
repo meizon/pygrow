@@ -1,7 +1,6 @@
 from . import base
 from grow.pods import env
 from protorpc import messages
-import os
 import webreview
 
 
@@ -12,6 +11,9 @@ class Config(messages.Message):
   server = messages.StringField(4, required=True)
   secure = messages.BooleanField(5, default=True)
   keep_control_dir = messages.BooleanField(6, default=False)
+  api_key = messages.StringField(7)
+  branch = messages.StringField(8)
+  sha = messages.StringField(9)
 
 
 class WebReviewDestination(base.BaseDestination):
@@ -22,13 +24,12 @@ class WebReviewDestination(base.BaseDestination):
 
   def __init__(self, *args, **kwargs):
     super(WebReviewDestination, self).__init__(*args, **kwargs)
-    api_key = os.getenv('WEBREVIEW_API_KEY')
     self.webreview = webreview.WebReview(
         project=self.config.project,
         name=self.config.name,
         host=self.config.server,
         secure=self.config.secure,
-        api_key=api_key)
+        api_key=self.config.api_key)
 
   def __str__(self):
     return self.config.server
